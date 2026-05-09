@@ -10,7 +10,7 @@ def generate_summary(raw_text):
     """
     Groq AI (Llama 3.1) se English summary banwane ke liye updated function with Fallback.
     """
-    print("Groq AI (Llama 3.1) se English summary banwayi ja rahi hai...")
+    print("Generating script via Groq AI (Llama 3.1)...")
     
     if not GROQ_KEY:
         return "Groq API key missing."

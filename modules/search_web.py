@@ -6,7 +6,7 @@ def get_search_results(topic, max_results=5):
     """
     Yeh function Google News RSS Feed use karta hai jo 100% free aur stable hai.
     """
-    print(f"Google News par search ho raha hai: {topic}...")
+    print(f"Searching on Google News: {topic}...")
     
     try:
         # Topic ko URL format mein convert karna (e.g., "AI news" -> "AI%20news")
@@ -27,7 +27,7 @@ def get_search_results(topic, max_results=5):
         items = root.findall('.//item')
         
         if not items:
-            return f"Mujhe '{topic}' ke bare mein koi naya data nahi mila."
+            return f"No results found for '{topic}'."
 
         # Top 5 news titles aur unki date nikalna
         for index, item in enumerate(items[:max_results], 1):
@@ -41,8 +41,8 @@ def get_search_results(topic, max_results=5):
         return combined_text
         
     except Exception as e:
-        print(f"Error aagaya search karte hue: {e}")
-        return f"Mujhe '{topic}' ke bare mein information nikalte hue error aagaya."
+        print(f"Error occurred while searching: {e}")
+        return f"Error occurred while searching for '{topic}'."
 
 # Testing Block
 if __name__ == "__main__":

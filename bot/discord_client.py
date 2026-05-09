@@ -32,35 +32,34 @@ def save_topics(topics):
 
 @bot.event
 async def on_ready():
-    print(f'System Ready: {bot.user} online aa chuka hai!')
+    print(f'System Ready: {bot.user} is live on Discord!')
 
 @bot.command()
 async def add(ctx, *, topic: str):
     topics = load_topics()
     topics.append(topic)
     save_topics(topics)
-    await ctx.send(f'✅ Topic save ho gaya: **{topic}**')
+    await ctx.send(f'✅ Topic added: **{topic}**')
 
 @bot.command()
 async def topics(ctx):
     topics = load_topics()
     if not topics:
-        await ctx.send("📭 Abhi tak koi topic save nahi kiya gaya.")
+        await ctx.send("📭 No topics added yet.")
     else:
-        response = "📝 **Aaj ke Topics:**\n"
+        response = "📝 **Today's Topics:**\n"
         for index, topic in enumerate(topics, 1):
             response += f"{index}. {topic}\n"
         await ctx.send(response)
 
-# FINAL PIPELINE COMMAND: Yeh command poora process run karegi
 @bot.command()
 async def get_summary(ctx):
     topics = load_topics()
     if not topics:
-        await ctx.send("📭 Koi topic save nahi hai. Pehle `!add` se topic add karein.")
+        await ctx.send("📭 No topics added yet. Please add topics using `!add` command.")
         return
     
-    await ctx.send("⚙️ Aapki AI Daily Summary tayar ki ja rahi hai, isme 1-2 minute lag sakte hain...")
+    await ctx.send("⚙️ Generating summaries for today's topics. Please wait...")
     
     for topic in topics:
         await ctx.send(f"🔍 Processing: **{topic}**...")
@@ -76,14 +75,12 @@ async def get_summary(ctx):
         
         # Step 4: Discord par Audio File send karna
         if audio_path and os.path.exists(audio_path):
-            # Discord par message aur file dono ek sath bhej rahe hain
+
             await ctx.send(f"🎙️ **Voice Summary for:** {topic}", file=discord.File(audio_path))
             
-            # File send hone ke baad system storage bachane ke liye use delete kar dein
             os.remove(audio_path)
         else:
-            await ctx.send(f"❌ '{topic}' ki audio generate karne mein masla aaya.")
+            await ctx.send(f"❌ '{topic}' problem in audio generation.\n\n{script}")
             
-    # Jab sab topics ki summary ban jaye, toh nayi subah ke liye list ko clear kar dein
     save_topics([])
-    await ctx.send("✅ Sab topics ki summary bhej di gayi hai aur memory clear kar di gayi hai!")
+    await ctx.send("✅ All summaries generated and topics list cleared for tomorrow!")
