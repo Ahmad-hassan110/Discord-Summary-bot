@@ -1,4 +1,4 @@
-# AI Daily Summary Agent for Discord
+# AI Daily Summary Agent 
 
 An intelligent Discord bot (AI Agent) that fetches the latest news on user-specified topics, generates a concise, conversational summary using Meta's Llama 3.1, and delivers it as a professional audio podcast directly in your Discord server.
 
